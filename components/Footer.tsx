@@ -53,17 +53,14 @@ export const Footer = ({ onCategorySelect }: FooterProps) => {
 
         </div>
 
-        {/* Bottom Bar */}
-        <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5 gap-4">
-          <p className="text-zinc-600 text-xs">© {new Date().getFullYear()} Nebula UI Inc. All rights reserved.</p>
-          
+        {/* Bottom Bar - Centered */}
+        <div className="flex flex-col items-center justify-center pt-8 border-t border-white/5 gap-6">
           <div className="flex gap-6 items-center">
-             <div className="flex gap-4">
-                 <a href="#" className="text-zinc-500 hover:text-white transition-colors"><Twitter size={18} /></a>
-                 <a href="#" className="text-zinc-500 hover:text-white transition-colors"><Github size={18} /></a>
-                 <a href="#" className="text-zinc-500 hover:text-white transition-colors"><Linkedin size={18} /></a>
-             </div>
+             <a href="#" className="text-zinc-500 hover:text-white transition-colors p-2 rounded-full hover:bg-white/5"><Twitter size={20} /></a>
+             <a href="#" className="text-zinc-500 hover:text-white transition-colors p-2 rounded-full hover:bg-white/5"><Github size={20} /></a>
+             <a href="#" className="text-zinc-500 hover:text-white transition-colors p-2 rounded-full hover:bg-white/5"><Linkedin size={20} /></a>
           </div>
+          <p className="text-zinc-600 text-xs">© {new Date().getFullYear()} Nebula UI Inc. All rights reserved.</p>
         </div>
       </div>
     </footer>
