@@ -16,16 +16,6 @@ export const Hero = () => {
 
       <div className="max-w-[1200px] mx-auto w-full text-center z-10 flex flex-col items-center justify-center flex-1">
         
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-10 hover:bg-white/10 transition-colors cursor-pointer group"
-        >
-          <span className="flex h-1.5 w-1.5 rounded-full bg-indigo-400 shadow-[0_0_8px_rgba(129,140,248,0.8)]"></span>
-          <span className="text-xs font-mono uppercase tracking-widest text-zinc-300 group-hover:text-white transition-colors">v2.0 Available Now</span>
-        </motion.div>
-
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}

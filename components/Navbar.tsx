@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Layers, ArrowRight } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Layers } from 'lucide-react';
 
 interface NavbarProps {
   onLogoClick?: () => void;
@@ -15,8 +14,15 @@ export const Navbar = ({ onLogoClick }: NavbarProps) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-40 flex justify-center pointer-events-none">
+    <nav className="fixed top-0 left-0 right-0 z-[100] flex justify-center pointer-events-none">
       <div 
         className={`w-full max-w-7xl px-6 transition-all duration-500 ease-in-out pointer-events-auto ${
           scrolled ? 'pt-4' : 'pt-6'
@@ -43,8 +49,8 @@ export const Navbar = ({ onLogoClick }: NavbarProps) => {
 
           {/* Center Links (Visible on Desktop) */}
           <div className={`hidden md:flex items-center gap-8 text-sm font-medium text-zinc-400 transition-opacity duration-300 ${scrolled ? 'opacity-100' : 'opacity-0 md:opacity-100'}`}>
-            <a href="#features" className="hover:text-white transition-colors">Features</a>
-            <a href="#gallery-start" className="hover:text-white transition-colors">Templates</a>
+            <button onClick={() => scrollToSection('features')} className="hover:text-white transition-colors focus:outline-none">Features</button>
+            <button onClick={() => scrollToSection('templates')} className="hover:text-white transition-colors focus:outline-none">Templates</button>
           </div>
 
           {/* Right Side */}

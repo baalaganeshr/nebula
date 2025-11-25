@@ -135,9 +135,9 @@ export const TemplateGallery = ({ selectedCategory = "All", onSelectCategory }: 
                   {/* Dark Overlay for Button Contrast */}
                   <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20" />
 
-                  {/* Button Container - Centered - Fades In */}
+                  {/* Button Container - Centered - Fades In with subtle slide */}
                   <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
-                    <button className="pointer-events-auto bg-white text-black font-bold px-6 py-3 rounded-full flex items-center gap-2 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100 ease-[cubic-bezier(0.23,1,0.32,1)] hover:scale-105 shadow-xl hover:shadow-2xl">
+                    <button className="pointer-events-auto bg-white text-black font-bold px-6 py-3 rounded-full flex items-center gap-2 transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 ease-out hover:scale-105 shadow-xl hover:shadow-2xl">
                         Live Preview <ArrowUpRight size={18} />
                     </button>
                   </div>

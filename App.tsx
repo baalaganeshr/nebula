@@ -3,12 +3,10 @@ import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { BentoGrid } from './components/BentoGrid';
 import { Footer } from './components/Footer';
-import { AiModal } from './components/AiModal';
 import { TemplateGallery } from './components/TemplateGallery';
 
 function App() {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
-  const [isAiOpen, setIsAiOpen] = useState(false);
 
   const handleCategorySelect = (category: string) => {
     setSelectedCategory(category);
@@ -33,7 +31,7 @@ function App() {
       <Hero />
       
       {/* Template Gallery Section */}
-      <div className="py-24" id="templates">
+      <div className="py-24 scroll-mt-24" id="templates">
         <TemplateGallery 
           selectedCategory={selectedCategory} 
           onSelectCategory={setSelectedCategory} 
@@ -45,8 +43,6 @@ function App() {
       
       <Footer onCategorySelect={handleCategorySelect} />
       
-      {/* AI Modal Overlay */}
-      <AiModal isOpen={isAiOpen} onClose={() => setIsAiOpen(false)} />
     </main>
   );
 }

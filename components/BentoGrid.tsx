@@ -58,7 +58,7 @@ const BentoCard = ({ title, desc, icon: Icon, delay, colSpan = 1 }: any) => {
 
 export const BentoGrid = () => {
   return (
-    <section className="py-32 px-6 relative" id="features">
+    <section className="py-32 px-6 relative scroll-mt-24" id="features">
        <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
             <div className="max-w-2xl">
