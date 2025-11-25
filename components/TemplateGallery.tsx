@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight, Layout, Box, Zap } from 'lucide-react';
 
@@ -54,6 +54,115 @@ const templates = [
 
 const categories = ["All", "Creative", "Business", "E-Commerce", "Corporate", "Content"];
 
+const TemplateCard = ({ template }: { template: any; key?: React.Key }) => {
+  const divRef = useRef<HTMLDivElement>(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [opacity, setOpacity] = useState(0);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!divRef.current) return;
+    const rect = divRef.current.getBoundingClientRect();
+    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  };
+
+  const handleMouseEnter = () => setOpacity(1);
+  const handleMouseLeave = () => setOpacity(0);
+
+  return (
+    <motion.div
+      layout
+      initial={{ opacity: 0, scale: 0.9, y: 20 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
+      transition={{ duration: 0.3, type: "spring", stiffness: 300, damping: 25 }}
+      className="group flex flex-col h-full w-full"
+    >
+      {/* Image Card with Spotlight */}
+      <div 
+        ref={divRef}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/50 mb-5 group-hover:border-zinc-500/50 transition-colors duration-500 shadow-2xl shadow-black/20 z-0"
+      >
+        {/* Spotlight Effect */}
+        <div 
+          className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 group-hover:opacity-100 z-10"
+          style={{
+            opacity,
+            background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(255,255,255,0.15), transparent 40%)`
+          }}
+        />
+
+        {/* Background Image/Gradient */}
+        <div className={`absolute inset-0 ${template.image} opacity-80 transition-transform duration-700 ease-out group-hover:scale-110 group-hover:opacity-100`}></div>
+        
+        {/* Floating Mockup Element */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="w-[75%] h-[75%] bg-[#050505] rounded-lg border border-white/5 shadow-2xl flex flex-col overflow-hidden transition-all duration-700 ease-out z-10 group-hover:scale-[1.02] group-hover:-translate-y-2 group-hover:shadow-black/50">
+              <div className="h-4 md:h-5 border-b border-white/5 bg-white/5 flex items-center gap-1.5 px-3 shrink-0">
+                  <div className="w-1.5 h-1.5 rounded-full bg-zinc-600"></div>
+                  <div className="w-1.5 h-1.5 rounded-full bg-zinc-600"></div>
+              </div>
+              <div className="flex-1 p-4 relative">
+                <div className="w-8 h-8 rounded-md border border-white/10 bg-white/5 mb-3"></div>
+                <div className="space-y-2">
+                    <div className="h-1.5 w-2/3 bg-white/10 rounded-full"></div>
+                    <div className="h-1.5 w-1/2 bg-white/10 rounded-full"></div>
+                    <div className="h-1.5 w-3/4 bg-white/10 rounded-full"></div>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        {/* Dark Overlay on Hover */}
+        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 backdrop-blur-[2px]" />
+
+        {/* Live Preview Button */}
+        <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
+          <button className="pointer-events-auto bg-white text-black font-bold px-6 py-3 rounded-full flex items-center gap-2 transform translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] shadow-xl hover:scale-105 hover:shadow-white/20">
+              Live Preview <ArrowUpRight size={18} />
+          </button>
+        </div>
+
+        {/* Tag */}
+        {template.tag && (
+          <div className="absolute top-4 left-4 bg-white/90 backdrop-blur text-black text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded z-30 shadow-sm">
+              {template.tag}
+          </div>
+        )}
+      </div>
+
+      {/* Content */}
+      <div className="flex flex-col flex-1 px-1">
+        <div className="flex justify-between items-start mb-2">
+            <h3 className="text-lg font-bold text-white group-hover:text-zinc-300 transition-colors">{template.title}</h3>
+        </div>
+        
+        <p className="text-zinc-500 text-sm leading-relaxed mb-6 line-clamp-2">
+          {template.description}
+        </p>
+        
+        {/* Meta Footer */}
+        <div className="mt-auto flex items-center gap-4 text-[10px] font-bold text-zinc-600 uppercase tracking-wider pt-4 border-t border-white/5">
+            <div className="flex items-center gap-1.5">
+              <Layout size={12} />
+              <span>Layout</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <Box size={12} />
+              <span>Components</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <Zap size={12} />
+              <span>Fast</span>
+            </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 export const TemplateGallery = ({ selectedCategory = "All", onSelectCategory }: TemplateGalleryProps) => {
   
   const filteredTemplates = selectedCategory === "All" 
@@ -102,84 +211,7 @@ export const TemplateGallery = ({ selectedCategory = "All", onSelectCategory }: 
         >
           <AnimatePresence mode='popLayout'>
             {filteredTemplates.map((template) => (
-              <motion.div
-                layout
-                key={template.title}
-                initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
-                transition={{ duration: 0.3, type: "spring", stiffness: 300, damping: 25 }}
-                className="group flex flex-col h-full w-full"
-              >
-                {/* Image Card */}
-                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/50 mb-5 group-hover:border-zinc-500/50 transition-colors duration-500 shadow-2xl shadow-black/20 z-0">
-                  
-                  {/* Background Image/Gradient */}
-                  <div className={`absolute inset-0 ${template.image} opacity-80 transition-transform duration-700 ease-out group-hover:scale-110 group-hover:opacity-100`}></div>
-                  
-                  {/* Floating Mockup Element - Center Aligned */}
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                      <div className="w-[75%] h-[75%] bg-[#050505] rounded-lg border border-white/5 shadow-2xl flex flex-col overflow-hidden transition-all duration-700 ease-out z-10 group-hover:scale-[1.02] group-hover:-translate-y-2 group-hover:shadow-black/50">
-                        <div className="h-4 md:h-5 border-b border-white/5 bg-white/5 flex items-center gap-1.5 px-3 shrink-0">
-                            <div className="w-1.5 h-1.5 rounded-full bg-zinc-600"></div>
-                            <div className="w-1.5 h-1.5 rounded-full bg-zinc-600"></div>
-                        </div>
-                        <div className="flex-1 p-4 relative">
-                          <div className="w-8 h-8 rounded-md border border-white/10 bg-white/5 mb-3"></div>
-                          <div className="space-y-2">
-                              <div className="h-1.5 w-2/3 bg-white/10 rounded-full"></div>
-                              <div className="h-1.5 w-1/2 bg-white/10 rounded-full"></div>
-                              <div className="h-1.5 w-3/4 bg-white/10 rounded-full"></div>
-                          </div>
-                        </div>
-                      </div>
-                  </div>
-
-                  {/* Dark Overlay on Hover */}
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 backdrop-blur-[2px]" />
-
-                  {/* Live Preview Button */}
-                  <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
-                    <button className="pointer-events-auto bg-white text-black font-bold px-6 py-3 rounded-full flex items-center gap-2 transform translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] shadow-xl hover:scale-105 hover:shadow-white/20">
-                        Live Preview <ArrowUpRight size={18} />
-                    </button>
-                  </div>
-
-                  {/* Tag */}
-                  {template.tag && (
-                    <div className="absolute top-4 left-4 bg-white/90 backdrop-blur text-black text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded z-30 shadow-sm">
-                        {template.tag}
-                    </div>
-                  )}
-                </div>
-
-                {/* Content - Flex Column to force alignment */}
-                <div className="flex flex-col flex-1 px-1">
-                  <div className="flex justify-between items-start mb-2">
-                     <h3 className="text-lg font-bold text-white group-hover:text-zinc-300 transition-colors">{template.title}</h3>
-                  </div>
-                  
-                  <p className="text-zinc-500 text-sm leading-relaxed mb-6 line-clamp-2">
-                    {template.description}
-                  </p>
-                  
-                  {/* Meta Footer - Pushed to bottom with mt-auto */}
-                  <div className="mt-auto flex items-center gap-4 text-[10px] font-bold text-zinc-600 uppercase tracking-wider pt-4 border-t border-white/5">
-                     <div className="flex items-center gap-1.5">
-                        <Layout size={12} />
-                        <span>Layout</span>
-                     </div>
-                     <div className="flex items-center gap-1.5">
-                        <Box size={12} />
-                        <span>Components</span>
-                     </div>
-                     <div className="flex items-center gap-1.5">
-                        <Zap size={12} />
-                        <span>Fast</span>
-                     </div>
-                  </div>
-                </div>
-              </motion.div>
+              <TemplateCard key={template.title} template={template} />
             ))}
           </AnimatePresence>
         </motion.div>
