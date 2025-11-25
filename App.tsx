@@ -3,9 +3,12 @@ import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { BentoGrid } from './components/BentoGrid';
 import { Footer } from './components/Footer';
+import { AiModal } from './components/AiModal';
 import { TemplateGallery } from './components/TemplateGallery';
+import { CustomCursor } from './components/CustomCursor';
 
 function App() {
+  const [isAiOpen, setIsAiOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
 
   const handleCategorySelect = (category: string) => {
@@ -24,7 +27,9 @@ function App() {
   };
 
   return (
-    <main className="min-h-screen text-white bg-brand-bg font-sans selection:bg-indigo-500/30 selection:text-indigo-200">
+    <main className="min-h-screen text-white bg-brand-bg font-sans selection:bg-indigo-500/30 selection:text-indigo-200 w-full overflow-x-hidden">
+      <CustomCursor />
+      
       <Navbar onLogoClick={handleReset} />
       
       {/* Hero Section */}
@@ -43,6 +48,8 @@ function App() {
       
       <Footer onCategorySelect={handleCategorySelect} />
       
+      {/* AI Modal Overlay */}
+      <AiModal isOpen={isAiOpen} onClose={() => setIsAiOpen(false)} />
     </main>
   );
 }
