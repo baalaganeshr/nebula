@@ -54,8 +54,8 @@ export const Footer = ({ onCategorySelect }: FooterProps) => {
         </div>
 
         {/* Bottom Bar - Centered */}
-        <div className="flex flex-col items-center justify-center pt-8 border-t border-white/5 gap-6">
-          <div className="flex gap-6 items-center">
+        <div className="flex flex-col items-center justify-center pt-8 border-t border-white/5 gap-6 text-center w-full">
+          <div className="flex gap-6 items-center justify-center">
              <a href="#" className="text-zinc-500 hover:text-white transition-colors p-2 rounded-full hover:bg-white/5"><Twitter size={20} /></a>
              <a href="#" className="text-zinc-500 hover:text-white transition-colors p-2 rounded-full hover:bg-white/5"><Github size={20} /></a>
              <a href="#" className="text-zinc-500 hover:text-white transition-colors p-2 rounded-full hover:bg-white/5"><Linkedin size={20} /></a>
