@@ -22,17 +22,19 @@ export const Hero = () => {
           transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="text-6xl sm:text-7xl md:text-8xl lg:text-[9rem] font-bold tracking-tighter text-white mb-8 leading-[0.9] text-balance"
         >
-          Crafting <span className="text-zinc-600">Digital</span> <br />
-          <span className="bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-zinc-500">Perfection.</span>
+          Crafting <span className="text-zinc-500">Digital</span>{' '}
+          <span className="bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-zinc-500">
+            Perfection.
+          </span>
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="text-lg md:text-2xl text-zinc-400 max-w-2xl mx-auto mb-14 leading-relaxed font-light"
+          className="text-lg md:text-2xl text-zinc-400 max-w-2xl mx-auto mb-14 leading-relaxed font-light text-balance"
         >
-          An ecosystem of high-fidelity components and templates. <br className="hidden md:block"/> Designed for the modern web, optimized for scale.
+          An ecosystem of high-fidelity components and templates. Designed for the modern web, optimized for scale.
         </motion.p>
 
         <motion.div

@@ -70,11 +70,11 @@ const TemplateCard: React.FC<{ template: any }> = ({ template }) => {
 
   return (
     <motion.div
-      layout="position"
+      layout
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.15 } }}
-      transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+      exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
+      transition={{ duration: 0.4, type: 'spring', stiffness: 100, damping: 15 }}
       className="group flex flex-col h-full w-full relative"
     >
       {/* Image Card with Spotlight */}
@@ -95,11 +95,11 @@ const TemplateCard: React.FC<{ template: any }> = ({ template }) => {
         />
 
         {/* Background Image/Gradient */}
-        <div className={`absolute inset-0 ${template.image} opacity-80 transition-transform duration-700 ease-out group-hover:scale-110 group-hover:opacity-100`}></div>
+        <div className={`absolute inset-0 ${template.image} opacity-80 transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-110 group-hover:opacity-100`}></div>
         
         {/* Floating Mockup Element */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="w-[75%] h-[75%] bg-[#050505] rounded-lg border border-white/5 shadow-2xl flex flex-col overflow-hidden transition-all duration-700 ease-out z-10 group-hover:scale-[1.02] group-hover:-translate-y-2 group-hover:shadow-black/50">
+            <div className="w-[75%] h-[75%] bg-[#050505] rounded-lg border border-white/5 shadow-2xl flex flex-col overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] z-10 group-hover:scale-105 group-hover:-translate-y-2 group-hover:shadow-2xl group-hover:shadow-black/50">
               <div className="h-4 md:h-5 border-b border-white/5 bg-white/5 flex items-center gap-1.5 px-3 shrink-0">
                   <div className="w-1.5 h-1.5 rounded-full bg-zinc-600"></div>
                   <div className="w-1.5 h-1.5 rounded-full bg-zinc-600"></div>
@@ -207,9 +207,9 @@ export const TemplateGallery = ({ selectedCategory = "All", onSelectCategory }: 
         {/* Gallery Grid */}
         <motion.div 
           layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10 lg:gap-x-8 lg:gap-y-12 w-full auto-rows-fr"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 w-full auto-rows-fr"
         >
-          <AnimatePresence mode="popLayout">
+          <AnimatePresence>
             {filteredTemplates.map((template) => (
               <TemplateCard key={template.title} template={template} />
             ))}
