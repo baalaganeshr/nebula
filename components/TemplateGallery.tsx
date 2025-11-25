@@ -54,7 +54,7 @@ const templates = [
 
 const categories = ["All", "Creative", "Business", "E-Commerce", "Corporate", "Content"];
 
-const TemplateCard = ({ template }: { template: any; key?: React.Key }) => {
+const TemplateCard: React.FC<{ template: any }> = ({ template }) => {
   const divRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
@@ -70,12 +70,12 @@ const TemplateCard = ({ template }: { template: any; key?: React.Key }) => {
 
   return (
     <motion.div
-      layout
-      initial={{ opacity: 0, scale: 0.9, y: 20 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
-      transition={{ duration: 0.3, type: "spring", stiffness: 300, damping: 25 }}
-      className="group flex flex-col h-full w-full"
+      layout="position"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.15 } }}
+      transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+      className="group flex flex-col h-full w-full relative"
     >
       {/* Image Card with Spotlight */}
       <div 
@@ -207,9 +207,9 @@ export const TemplateGallery = ({ selectedCategory = "All", onSelectCategory }: 
         {/* Gallery Grid */}
         <motion.div 
           layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 w-full"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10 lg:gap-x-8 lg:gap-y-12 w-full auto-rows-fr"
         >
-          <AnimatePresence mode='popLayout'>
+          <AnimatePresence mode="popLayout">
             {filteredTemplates.map((template) => (
               <TemplateCard key={template.title} template={template} />
             ))}
@@ -220,7 +220,7 @@ export const TemplateGallery = ({ selectedCategory = "All", onSelectCategory }: 
             <motion.div 
                 initial={{ opacity: 0 }} 
                 animate={{ opacity: 1 }} 
-                className="min-h-[300px] flex flex-col items-center justify-center border border-dashed border-white/10 rounded-3xl mt-8"
+                className="min-h-[300px] flex flex-col items-center justify-center border border-dashed border-white/10 rounded-3xl mt-8 col-span-full"
             >
                 <p className="text-zinc-500 mb-4 font-medium">No templates found in this category.</p>
                 {onSelectCategory && (
