@@ -10,11 +10,12 @@ export const Footer = ({ onCategorySelect }: FooterProps) => {
     <footer className="bg-[#050505] text-white overflow-hidden relative border-t border-white/5 font-sans">
       <div className="max-w-7xl mx-auto px-6 pt-20 pb-12">
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 mb-20">
+        {/* Main Grid: 4 Columns on Tablet/Desktop for strict alignment */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 lg:gap-8 mb-20">
           
-          {/* Left: Brand & CTA */}
-          <div className="flex flex-col items-start justify-between">
-            <div className="max-w-md">
+          {/* Brand & CTA - Spans 2 Columns */}
+          <div className="md:col-span-2 flex flex-col items-start">
+            <div className="max-w-sm">
                <h3 className="text-3xl md:text-4xl font-bold mb-6 tracking-tight text-white">
                 Start your next project.
               </h3>
@@ -28,42 +29,28 @@ export const Footer = ({ onCategorySelect }: FooterProps) => {
             </div>
           </div>
 
-          {/* Right: Links - Replaced Company with Website Combinations */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 lg:gap-12 w-full">
-                
-                {/* Column 1 */}
-                <div className="flex flex-col gap-4">
-                    <h4 className="text-sm font-semibold text-white">Templates</h4>
-                    <ul className="space-y-3 text-sm text-zinc-500">
-                        <li><button onClick={() => onCategorySelect?.('Creative')} className="hover:text-white transition-colors">Portfolio</button></li>
-                        <li><button onClick={() => onCategorySelect?.('Business')} className="hover:text-white transition-colors">Startup</button></li>
-                        <li><button onClick={() => onCategorySelect?.('E-Commerce')} className="hover:text-white transition-colors">Commerce</button></li>
-                        <li><button onClick={() => onCategorySelect?.('Corporate')} className="hover:text-white transition-colors">Agency</button></li>
-                    </ul>
-                </div>
+          {/* Templates Column */}
+          <div className="flex flex-col gap-4">
+              <h4 className="text-sm font-semibold text-white">Templates</h4>
+              <ul className="space-y-3 text-sm text-zinc-500">
+                  <li><button onClick={() => onCategorySelect?.('Creative')} className="hover:text-white transition-colors text-left">Portfolio</button></li>
+                  <li><button onClick={() => onCategorySelect?.('Business')} className="hover:text-white transition-colors text-left">Startup</button></li>
+                  <li><button onClick={() => onCategorySelect?.('E-Commerce')} className="hover:text-white transition-colors text-left">Commerce</button></li>
+                  <li><button onClick={() => onCategorySelect?.('Corporate')} className="hover:text-white transition-colors text-left">Agency</button></li>
+              </ul>
+          </div>
 
-                {/* Column 2 */}
-                <div className="flex flex-col gap-4">
-                    <h4 className="text-sm font-semibold text-white">Categories</h4>
-                    <ul className="space-y-3 text-sm text-zinc-500">
-                        <li><button onClick={() => onCategorySelect?.('Content')} className="hover:text-white transition-colors">Blog</button></li>
-                        <li><button onClick={() => onCategorySelect?.('Business')} className="hover:text-white transition-colors">SaaS</button></li>
-                        <li><button onClick={() => onCategorySelect?.('All')} className="hover:text-white transition-colors">Landing Page</button></li>
-                        <li><button onClick={() => onCategorySelect?.('All')} className="hover:text-white transition-colors">Mobile App</button></li>
-                    </ul>
-                </div>
-                
-                 {/* Column 3 */}
-                <div className="flex flex-col gap-4">
-                    <h4 className="text-sm font-semibold text-white">Resources</h4>
-                    <ul className="space-y-3 text-sm text-zinc-500">
-                        <li><a href="#" className="hover:text-white transition-colors">Documentation</a></li>
-                        <li><a href="#" className="hover:text-white transition-colors">Changelog</a></li>
-                        <li><a href="#" className="hover:text-white transition-colors">Community</a></li>
-                        <li><a href="#" className="hover:text-white transition-colors">Help Center</a></li>
-                    </ul>
-                </div>
-             </div>
+          {/* Categories Column */}
+          <div className="flex flex-col gap-4">
+              <h4 className="text-sm font-semibold text-white">Categories</h4>
+              <ul className="space-y-3 text-sm text-zinc-500">
+                  <li><button onClick={() => onCategorySelect?.('Content')} className="hover:text-white transition-colors text-left">Blog</button></li>
+                  <li><button onClick={() => onCategorySelect?.('Business')} className="hover:text-white transition-colors text-left">SaaS</button></li>
+                  <li><button onClick={() => onCategorySelect?.('All')} className="hover:text-white transition-colors text-left">Landing Page</button></li>
+                  <li><button onClick={() => onCategorySelect?.('All')} className="hover:text-white transition-colors text-left">Mobile App</button></li>
+              </ul>
+          </div>
+
         </div>
 
         {/* Bottom Bar */}
