@@ -7,7 +7,7 @@ interface FooterProps {
 
 export const Footer = ({ onCategorySelect }: FooterProps) => {
   return (
-    <footer className="bg-[#050505] text-white overflow-hidden relative border-t border-white/5 font-sans">
+    <footer id="contact" className="bg-[#050505] text-white overflow-hidden relative border-t border-white/5 font-sans">
       <div className="max-w-7xl mx-auto px-6 pt-20 pb-12">
         
         {/* Main Grid: 4 Columns on Tablet/Desktop for strict alignment */}

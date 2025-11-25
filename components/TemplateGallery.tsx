@@ -1,6 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowUpRight, Layout, Box, Zap } from 'lucide-react';
+import { ArrowUpRight, Layout, Box, Zap, X, Filter } from 'lucide-react';
 
 interface TemplateGalleryProps {
   selectedCategory?: string;
@@ -184,13 +184,24 @@ const TemplateCard: React.FC<{ template: any }> = ({ template }) => {
 };
 
 export const TemplateGallery = ({ selectedCategory = "All", onSelectCategory }: TemplateGalleryProps) => {
+  const [isMobileModalOpen, setIsMobileModalOpen] = useState(false);
   
   const filteredTemplates = selectedCategory === "All" 
     ? templates 
     : templates.filter(t => t.category === selectedCategory);
 
+  // Prevent background scrolling when mobile modal is open
+  useEffect(() => {
+    if (isMobileModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => { document.body.style.overflow = 'unset'; };
+  }, [isMobileModalOpen]);
+
   return (
-    <section className="px-4 md:px-6 w-full">
+    <section className="px-4 md:px-6 w-full relative">
       <div id="gallery-start" className="max-w-7xl mx-auto">
         
         {/* Header Section */}
@@ -204,9 +215,9 @@ export const TemplateGallery = ({ selectedCategory = "All", onSelectCategory }: 
             </p>
           </div>
 
-          {/* Filter Tabs */}
+          {/* Filter Tabs - Hidden on Mobile Main View, shown in Desktop */}
           {onSelectCategory && (
-            <div className="flex flex-wrap gap-2">
+            <div className="hidden md:flex flex-wrap gap-2">
               {categories.map((cat) => (
                 <button
                   key={cat}
@@ -224,17 +235,34 @@ export const TemplateGallery = ({ selectedCategory = "All", onSelectCategory }: 
           )}
         </div>
 
-        {/* Gallery Grid */}
+        {/* Gallery Grid - Desktop (All) & Mobile (Preview) */}
         <motion.div 
           layout
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 w-full"
         >
           <AnimatePresence mode='popLayout'>
-            {filteredTemplates.map((template) => (
-              <TemplateCard key={template.title} template={template} />
+            {filteredTemplates.map((template, index) => (
+              <div 
+                key={template.title} 
+                className={`${index >= 3 ? 'hidden md:block' : 'block'}`}
+              >
+                <TemplateCard template={template} />
+              </div>
             ))}
           </AnimatePresence>
         </motion.div>
+
+        {/* Mobile "View All" Button */}
+        <div className="mt-8 md:hidden flex justify-center">
+             <button 
+                onClick={() => setIsMobileModalOpen(true)}
+                className="w-full bg-white/5 border border-white/10 hover:bg-white/10 text-white font-medium py-4 rounded-xl flex items-center justify-center gap-2 transition-colors"
+             >
+                <Box size={18} />
+                View All Projects
+                <span className="bg-white/20 px-2 py-0.5 rounded text-xs ml-2">{templates.length}</span>
+             </button>
+        </div>
 
         {filteredTemplates.length === 0 && (
             <motion.div 
@@ -255,6 +283,75 @@ export const TemplateGallery = ({ selectedCategory = "All", onSelectCategory }: 
         )}
 
       </div>
+
+      {/* Mobile Full Screen Gallery Modal */}
+      <AnimatePresence>
+        {isMobileModalOpen && (
+          <motion.div 
+            initial={{ opacity: 0, y: "100%" }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: "100%" }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className="fixed inset-0 z-[200] bg-[#050505] overflow-y-auto"
+          >
+             <div className="min-h-full p-6 pb-20">
+                {/* Modal Header */}
+                <div className="flex justify-between items-center mb-8 sticky top-0 bg-[#050505]/80 backdrop-blur-md py-4 z-10 border-b border-white/5 -mx-6 px-6">
+                    <h2 className="text-2xl font-bold flex items-center gap-2">
+                      <Box className="text-brand-primary" />
+                      All Projects
+                    </h2>
+                    <button 
+                      onClick={() => setIsMobileModalOpen(false)}
+                      className="p-2 bg-white/5 rounded-full hover:bg-white/10 transition-colors"
+                    >
+                      <X size={20} />
+                    </button>
+                </div>
+
+                {/* Mobile Filters */}
+                {onSelectCategory && (
+                   <div className="mb-8">
+                     <div className="flex items-center gap-2 text-sm text-zinc-500 mb-3 px-1">
+                        <Filter size={14} />
+                        <span>Filter by category</span>
+                     </div>
+                     <div className="flex gap-2 overflow-x-auto pb-4 scrollbar-hide -mx-6 px-6">
+                        {categories.map((cat) => (
+                          <button
+                            key={cat}
+                            onClick={() => onSelectCategory(cat)}
+                            className={`px-5 py-2.5 rounded-full text-sm font-medium whitespace-nowrap transition-all border ${
+                              selectedCategory === cat
+                                ? 'bg-white text-black border-white'
+                                : 'bg-white/5 text-zinc-400 border-white/5'
+                            }`}
+                          >
+                            {cat}
+                          </button>
+                        ))}
+                     </div>
+                   </div>
+                )}
+
+                {/* Mobile Full Grid */}
+                <div className="grid grid-cols-1 gap-8">
+                   {filteredTemplates.map((template) => (
+                      <TemplateCard key={template.title} template={template} />
+                   ))}
+                </div>
+                
+                {/* Empty State in Modal */}
+                {filteredTemplates.length === 0 && (
+                  <div className="text-center py-20 text-zinc-500">
+                    <p>No projects found for this category.</p>
+                  </div>
+                )}
+             </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
     </section>
   );
 };
